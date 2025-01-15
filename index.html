@@ -12,7 +12,11 @@
     <div id="app">
 
         <h1>Liste des superhéros</h1>
-        <p> {{ superHeros }} </p>
+        <ul>
+            <li v-for="hero in filteredHeroes" :key="hero.id">
+                {{ hero.id }} - Nom : {{ hero.name }}
+            </li>
+        </ul>
 
     </div>
 
@@ -25,6 +29,15 @@
                 }
             },
 
+            computed: {
+                filteredHeroes() {
+                    return this.superHeros.map(hero => ({
+                        id: hero.id,
+                        name: hero.name
+                    }));
+                }
+            },
+
             mounted() { 
                 axios.get('https://cdn.jsdelivr.net/gh/rtomczak/superhero-api@0.3.0/api/all.json') 
                 .then(response => { 
@@ -33,12 +46,11 @@
                 .catch(error => { 
                     console.log(error); 
                 }); 
-            } 
+            },
+
         })
 
         app.mount('#app')
-
-        
 
     </script>
 
