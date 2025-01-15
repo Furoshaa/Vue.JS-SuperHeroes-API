@@ -12,11 +12,9 @@
     <div id="app">
 
         <h1>Liste des superhéros</h1>
-        <ul>
-            <li v-for="hero in filteredHeroes" :key="hero.id">
-                {{ hero.id }} - Nom : {{ hero.name }}
-            </li>
-        </ul>
+        <p v-for="hero in filteredHeroes" :key="hero.id">
+            {{ hero.id }} - Nom : {{ hero.name }}
+        </p>
 
     </div>
 
