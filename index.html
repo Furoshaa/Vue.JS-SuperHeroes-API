@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Superheroes vue.js</title>
 </head>
 <body>
@@ -13,6 +14,20 @@
         <p> {{ superHeroes }} </p>
 
     </div>
+
+    <script>
+        
+        const app = Vue.createApp({
+            data() {
+                return {
+                    superHeroes: []
+                }
+            }
+        })
+
+        app.mount('#app')
+
+    </script>
 
 </body>
 </html>
