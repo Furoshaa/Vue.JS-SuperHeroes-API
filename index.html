@@ -16,9 +16,12 @@
         <input type="checkbox" id="showStats" v-model="printpower">
         <label for="showStats">Afficher les pouvoirs</label>
 
-        <input type="text" class="form-control my-4" placeholder="Rechercher un superhéros" v-model="searchQuery">
+        <div class="my-3">
+            <input type="text" class="form-control" placeholder="Rechercher un superhéros" v-model="searchQuery">
+            <button class="btn btn-primary" @click="searchQuery = ''">Reinitialiser</button>
+        </div>
         
-        <div class="list-group">
+        <div class="list-group my-3">
             <div class="list-group-item list-group-item-action d-flex align-items-center w-100 justify-content-between" 
                  v-for="hero in filteredSuperheros" 
                  :key="hero.id">
