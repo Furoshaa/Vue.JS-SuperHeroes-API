@@ -9,6 +9,19 @@
     <title>Superheroes vue.js</title>
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">SuperHeroes</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Liste des superhéros</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     
     <div id="app" class="container">
         <h1 class="my-4">Liste des superhéros</h1>
@@ -25,7 +38,6 @@
             <div class="list-group-item list-group-item-action d-flex align-items-center w-100 justify-content-between" 
                  v-for="hero in filteredSuperheros" 
                  :key="hero.id">
-                <h5>{{ hero.name }}</h5>
                 <div class="d-flex align-items-center">
                     <img :src="hero.images.md" 
                          @error="handleImageError"
@@ -33,6 +45,7 @@
                          width="50"
                          :alt="hero.name" />
                 </div>
+                <h5>{{ hero.name }}</h5>
                 <small v-if="printpower" class="d-flex gap-2">
                     <div v-for="(value, key) in hero.powerstats" :key="key">
                         {{key}}: {{value}} 
