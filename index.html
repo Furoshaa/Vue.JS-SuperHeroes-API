@@ -15,10 +15,12 @@
 
         <input type="checkbox" id="showStats" v-model="printpower">
         <label for="showStats">Afficher les pouvoirs</label>
+
+        <input type="text" class="form-control my-4" placeholder="Rechercher un superhéros" v-model="searchQuery">
         
         <div class="list-group">
             <div class="list-group-item list-group-item-action d-flex align-items-center w-100 justify-content-between" 
-                 v-for="hero in superHeros" 
+                 v-for="hero in filteredSuperheros" 
                  :key="hero.id">
                 <h5>{{ hero.name }}</h5>
                 <div class="d-flex align-items-center">
@@ -43,7 +45,16 @@
             data() {
                 return {
                     superHeros: [],
-                    printpower: false
+                    printpower: false,
+                    searchQuery: ''
+                }
+            },
+
+            computed: {
+                filteredSuperheros() {
+                    return this.superHeros.filter(hero => 
+                        hero.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+                    )
                 }
             },
 
@@ -59,10 +70,12 @@
                     this.superHeros = response.data;
                 })
                 .catch(error => {
-                    console.error('Error fetching heroes:', error);
+                    console.error('Error:', error);
                 });
             }
-        }).mount('#app');
+        });
+
+        app.mount('#app');
     </script>
 </body>
 </html>
