@@ -12,19 +12,22 @@
     
     <div id="app" class="container">
         <h1 class="my-4">Liste des superhéros</h1>
+
+        <input type="checkbox" id="showStats" v-model="showStats"><a> Afficher les pouvoirs</a></input>
         
         <div class="list-group">
             <div class="list-group-item list-group-item-action d-flex align-items-center w-100 justify-content-between" 
                  v-for="hero in superHeros" 
                  :key="hero.id">
-                <h5 class="mb-0">{{ hero.name }}</h5>
-                <div class="d-flex align-items-center gap-3">
+                <h5>{{ hero.name }}</h5>
+                <div class="d-flex align-items-center">
                     <img :src="hero.images.md" 
                          @error="handleImageError"
                          class="rounded-circle" 
                          width="50"
                          :alt="hero.name" />
                 </div>
+                <small>{{ hero.powerstats }}</small>
                 <small>{{ hero.id }}</small>
             </div>
         </div>
