@@ -24,7 +24,10 @@
         </div>
         
         <div class="list-group my-3">
-            <div class="list-group-item" v-for="hero in filteredSuperheros" :key="hero.id">
+            <div class="list-group-item" v-for="hero in filteredSuperheros" 
+                :key="hero.id"
+                @click="goToDetail(hero.id)"
+                style="cursor: pointer">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <div class="d-flex align-items-center gap-3">
                         <img :src="hero.images.md" 
@@ -67,6 +70,9 @@
             methods: {
                 handleImageError(e) {
                     e.target.src = 'https://via.placeholder.com/50'
+                },
+                goToDetail(heroId) {
+                    window.location.href = `detailhero.html?id=${heroId}`;
                 }
             },
 
