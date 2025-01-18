@@ -9,32 +9,8 @@
     <title>Superheroes vue.js</title>
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand">SuperHeroes</a>
-            <!-- Add hamburger button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Liste des superhéros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Détail d'un superhero</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">SuperPower matcher</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">L'auteur</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Add navbar container -->
+    <div id="navbar-container"></div>
     
     <div id="app" class="container">
         <h1 class="my-4">Liste des superhéros</h1>
@@ -95,13 +71,21 @@
             },
 
             mounted() {
+                // Load navbar
+                fetch('navbar.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('navbar-container').innerHTML = data;
+                    });
+
+                // Load superheros data
                 axios.get('https://cdn.jsdelivr.net/gh/rtomczak/superhero-api@0.3.0/api/all.json')
-                .then(response => {
-                    this.superHeros = response.data;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                    .then(response => {
+                        this.superHeros = response.data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
         });
 
