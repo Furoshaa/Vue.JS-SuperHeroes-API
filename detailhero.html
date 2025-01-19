@@ -9,7 +9,9 @@
     <title>Détails du Super Héros</title>
 </head>
 <body>
-    <div id="navbar-container"></div>
+
+    <div id="navbar-container">
+    </div>
 
     <div id="app" class="container my-4">
         <div v-if="hero" class="row">
@@ -22,39 +24,43 @@
                 <h3 class="mt-4">Power Stats</h3>
                 <div class="progress mb-2" v-for="(value, stat) in hero.powerstats" :key="stat">
                     <div class="progress-bar" :style="{ width: value + '%' }">
-                        {{ stat }}: {{ value }}
+                        {{ stat }} : {{ value }}
                     </div>
                 </div>
 
                 <h3 class="mt-4">Appearance</h3>
                 <ul class="list-group">
                     <li class="list-group-item" v-for="(value, key) in hero.appearance" :key="key">
-                        <strong>{{ key }}:</strong> {{ Array.isArray(value) ? value.join(' / ') : value }}
+                        <strong>{{ key }} :</strong> {{ Array.isArray(value) ? value.join(' / ') : value }}
                     </li>
                 </ul>
 
                 <h3 class="mt-4">Biography</h3>
                 <ul class="list-group">
                     <li class="list-group-item" v-for="(value, key) in hero.biography" :key="key">
-                        <strong>{{ key }}:</strong> {{ value }}
+                        <strong>{{ key }} :</strong> {{ value }}
                     </li>
                 </ul>
 
                 <h3 class="mt-4">Work</h3>
                 <ul class="list-group">
                     <li class="list-group-item" v-for="(value, key) in hero.work" :key="key">
-                        <strong>{{ key }}:</strong> {{ value }}
+                        <strong>{{ key }} :</strong> {{ value }}
                     </li>
                 </ul>
 
                 <h3 class="mt-4">Connections</h3>
                 <ul class="list-group">
                     <li class="list-group-item" v-for="(value, key) in hero.connections" :key="key">
-                        <strong>{{ key }}:</strong> {{ value }}
+                        <strong>{{ key }} :</strong> {{ value }}
                     </li>
                 </ul>
 
-                <button class="btn btn-primary mt-4" @click="goBack">Retour à la liste</button>
+                <div class="mt-4 d-flex gap-3">
+                    <button class="btn btn-primary" @click="goBack">Retour à la liste</button>
+                    <button class="btn btn-primary" @click="previousHero">Hero precedent</button>
+                    <button class="btn btn-primary" @click="nextHero">Hero suivant</button>
+                </div>
             </div>
         </div>
     </div>
@@ -63,7 +69,8 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    hero: null
+                    hero: null,
+                    allHeroes: [] // Add this line
                 }
             },
 
@@ -72,13 +79,30 @@
                     window.location.href = 'index.html';
                 },
 
+                previousHero() {
+                    const currentIndex = this.allHeroes.findIndex(h => h.id === this.hero.id);
+                    if (currentIndex > 0) {
+                        const prevHero = this.allHeroes[currentIndex - 1];
+                        window.location.href = `detailhero.html?id=${prevHero.id}`;
+                    }
+                },
+
+                nextHero() {
+                    const currentIndex = this.allHeroes.findIndex(h => h.id === this.hero.id);
+                    if (currentIndex < this.allHeroes.length - 1) {
+                        const nextHero = this.allHeroes[currentIndex + 1];
+                        window.location.href = `detailhero.html?id=${nextHero.id}`;
+                    }
+                },
+
                 loadHero() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const id = urlParams.get('id');
                     
                     axios.get('https://cdn.jsdelivr.net/gh/rtomczak/superhero-api@0.3.0/api/all.json')
                         .then(response => {
-                            this.hero = response.data.find(h => h.id === parseInt(id));
+                            this.allHeroes = response.data; // Store all heroes
+                            this.hero = this.allHeroes.find(h => h.id === parseInt(id));
                         })
                         .catch(error => {
                             console.error('Error:', error);
