@@ -70,7 +70,7 @@
             data() {
                 return {
                     hero: null,
-                    allHeroes: [] // Add this line
+                    allHeroes: []
                 }
             },
 
@@ -101,7 +101,7 @@
                     
                     axios.get('https://cdn.jsdelivr.net/gh/rtomczak/superhero-api@0.3.0/api/all.json')
                         .then(response => {
-                            this.allHeroes = response.data; // Store all heroes
+                            this.allHeroes = response.data;
                             this.hero = this.allHeroes.find(h => h.id === parseInt(id));
                         })
                         .catch(error => {
